@@ -409,6 +409,7 @@ def add_sale(product_db, customer_db, monitor):
     industry = segment = status = lead_source = ""
     address_line1 = address_line2 = city = state = country = postal_code = ""
     payment_status = Config.DEFAULT_PAYMENT_STATUS
+    payment_terms = Config.DEFAULT_PAYMENT_TERMS
     fulfillment_status = Config.DEFAULT_FULFILLMENT_STATUS
     channel = Config.DEFAULT_CHANNEL
     source = Config.DEFAULT_SOURCE
@@ -432,6 +433,10 @@ def add_sale(product_db, customer_db, monitor):
         payment_status = prompt_text(
             f"Payment status (default {Config.DEFAULT_PAYMENT_STATUS}): ",
             Config.DEFAULT_PAYMENT_STATUS,
+        )
+        payment_terms = prompt_text(
+            f"Payment terms (default {Config.DEFAULT_PAYMENT_TERMS}): ",
+            Config.DEFAULT_PAYMENT_TERMS,
         )
         fulfillment_status = prompt_text(
             f"Fulfillment status (default {Config.DEFAULT_FULFILLMENT_STATUS}): ",
@@ -483,6 +488,7 @@ def add_sale(product_db, customer_db, monitor):
         total=total,
         currency=currency,
         payment_status=payment_status,
+        payment_terms=payment_terms,
         fulfillment_status=fulfillment_status,
         payment_method=payment_method,
         channel=channel,
@@ -515,6 +521,7 @@ def show_recent_purchases(monitor):
                 "total": pretty_money(row["total"], f"{row['currency']} "),
                 "status": row["status"],
                 "payment": row["payment_status"],
+                "terms": row["payment_terms"],
             }
         )
 
@@ -530,6 +537,7 @@ def show_recent_purchases(monitor):
             ("total", "Total"),
             ("status", "Status"),
             ("payment", "Payment"),
+            ("terms", "Terms"),
         ],
         title=f"\nLast {Config.MAX_RECENT_PURCHASES} Purchases",
         max_width=18,
@@ -557,6 +565,7 @@ def search_purchases(monitor):
                 "currency": row["currency"],
                 "total": pretty_money(row["total"], f"{row['currency']} "),
                 "payment": row["payment_status"],
+                "terms": row["payment_terms"],
             }
         )
 
@@ -571,6 +580,7 @@ def search_purchases(monitor):
             ("currency", "Cur"),
             ("total", "Total"),
             ("payment", "Payment"),
+            ("terms", "Terms"),
         ],
         title="\nPurchase Search Results",
         max_width=18,

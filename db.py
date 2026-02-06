@@ -52,6 +52,7 @@ class PurchaseDB(DBBase):
                     currency TEXT,
                     status TEXT NOT NULL,
                     payment_status TEXT,
+                    payment_terms TEXT,
                     fulfillment_status TEXT,
                     payment_method TEXT,
                     channel TEXT,
@@ -79,6 +80,7 @@ class PurchaseDB(DBBase):
             "total": "REAL",
             "currency": "TEXT",
             "payment_status": "TEXT",
+            "payment_terms": "TEXT",
             "fulfillment_status": "TEXT",
             "payment_method": "TEXT",
             "channel": "TEXT",
@@ -108,6 +110,7 @@ class PurchaseDB(DBBase):
         total=None,
         currency=None,
         payment_status="",
+        payment_terms="",
         fulfillment_status="",
         payment_method="",
         channel="",
@@ -168,10 +171,10 @@ class PurchaseDB(DBBase):
                 INSERT INTO purchases (
                     timestamp, customer, customer_email, product, amount,
                     quantity, unit_price, subtotal, discount, tax, total, currency,
-                    status, payment_status, fulfillment_status, payment_method,
+                    status, payment_status, payment_terms, fulfillment_status, payment_method,
                     channel, source, region, sales_rep, invoice_id, tags, notes
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     ts,
@@ -188,6 +191,7 @@ class PurchaseDB(DBBase):
                     currency,
                     status,
                     payment_status,
+                    payment_terms,
                     fulfillment_status,
                     payment_method,
                     channel,
@@ -218,7 +222,7 @@ class PurchaseDB(DBBase):
                 """
                 SELECT timestamp, customer, customer_email, product,
                        quantity, unit_price, subtotal, discount, tax, total, currency,
-                       status, payment_status, fulfillment_status,
+                       status, payment_status, payment_terms, fulfillment_status,
                        payment_method, channel, source, region, sales_rep,
                        invoice_id, tags, notes
                 FROM purchases
@@ -245,15 +249,16 @@ class PurchaseDB(DBBase):
                         "currency": row[10] or "",
                         "status": row[11] or "",
                         "payment_status": row[12] or "",
-                        "fulfillment_status": row[13] or "",
-                        "payment_method": row[14] or "",
-                        "channel": row[15] or "",
-                        "source": row[16] or "",
-                        "region": row[17] or "",
-                        "sales_rep": row[18] or "",
-                        "invoice_id": row[19] or "",
-                        "tags": row[20] or "",
-                        "notes": row[21] or "",
+                        "payment_terms": row[13] or "",
+                        "fulfillment_status": row[14] or "",
+                        "payment_method": row[15] or "",
+                        "channel": row[16] or "",
+                        "source": row[17] or "",
+                        "region": row[18] or "",
+                        "sales_rep": row[19] or "",
+                        "invoice_id": row[20] or "",
+                        "tags": row[21] or "",
+                        "notes": row[22] or "",
                     }
                 )
             return result
@@ -266,9 +271,9 @@ class PurchaseDB(DBBase):
         if query:
             clauses.append(
                 "(customer LIKE ? OR customer_email LIKE ? OR product LIKE ? "
-                "OR notes LIKE ? OR invoice_id LIKE ? OR tags LIKE ?)"
+                "OR notes LIKE ? OR invoice_id LIKE ? OR tags LIKE ? OR payment_terms LIKE ?)"
             )
-            params.extend([like, like, like, like, like, like])
+            params.extend([like, like, like, like, like, like, like])
 
         if days is not None and days > 0:
             cutoff = datetime.now() - timedelta(days=days)
@@ -278,7 +283,7 @@ class PurchaseDB(DBBase):
         sql = (
             "SELECT timestamp, customer, customer_email, product, quantity, unit_price, "
             "subtotal, discount, tax, total, currency, status, payment_status, "
-            "fulfillment_status, payment_method, channel, source, region, sales_rep, "
+            "payment_terms, fulfillment_status, payment_method, channel, source, region, sales_rep, "
             "invoice_id, tags, notes FROM purchases"
         )
         if clauses:
@@ -306,15 +311,16 @@ class PurchaseDB(DBBase):
                         "currency": row[10] or "",
                         "status": row[11] or "",
                         "payment_status": row[12] or "",
-                        "fulfillment_status": row[13] or "",
-                        "payment_method": row[14] or "",
-                        "channel": row[15] or "",
-                        "source": row[16] or "",
-                        "region": row[17] or "",
-                        "sales_rep": row[18] or "",
-                        "invoice_id": row[19] or "",
-                        "tags": row[20] or "",
-                        "notes": row[21] or "",
+                        "payment_terms": row[13] or "",
+                        "fulfillment_status": row[14] or "",
+                        "payment_method": row[15] or "",
+                        "channel": row[16] or "",
+                        "source": row[17] or "",
+                        "region": row[18] or "",
+                        "sales_rep": row[19] or "",
+                        "invoice_id": row[20] or "",
+                        "tags": row[21] or "",
+                        "notes": row[22] or "",
                     }
                 )
             return result

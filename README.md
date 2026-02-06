@@ -48,6 +48,7 @@ Defaults:
 - `DEFAULT_CURRENCY` (e.g., USD)
 - `DEFAULT_TAX_RATE` (0 to 1)
 - `DEFAULT_PAYMENT_STATUS`
+- `DEFAULT_PAYMENT_TERMS`
 - `DEFAULT_FULFILLMENT_STATUS`
 - `DEFAULT_CHANNEL`
 - `DEFAULT_SOURCE`
@@ -84,7 +85,7 @@ Tip: Use `.env.example` as a template.
 Tables:
 - `products`: name, sku, category, price, cost, tax_rate, unit, description, features, best_for, active
 - `customers`: name, email, phone, company, industry, segment, status, lead_source, address, notes
-- `purchases`: quantity, unit_price, discounts, tax, total, currency, payment/fulfillment status, channel, region, invoice id, tags, notes
+- `purchases`: quantity, unit_price, discounts, tax, total, currency, payment terms, payment/fulfillment status, channel, region, invoice id, tags, notes
 
 CSV files in `data/` are only used for initial seeding.
 

@@ -17,7 +17,7 @@ class Config:
 
     # Company
     COMPANY_NAME = os.getenv("COMPANY_NAME", "Your Company")
-    COMPANY_EMAIL = os.getenv("COMPANY_EMAIL", "sales@yourcompany.com")
+    COMPANY_EMAIL = os.getenv("COMPANY_EMAIL_ID", "sales@yourcompany.com")
     ALERT_EMAIL = os.getenv("ALERT_EMAIL", "manager@yourcompany.com")
 
     # Storage
@@ -50,6 +50,7 @@ class Config:
     DEFAULT_CURRENCY = os.getenv("DEFAULT_CURRENCY", "USD")
     DEFAULT_TAX_RATE = float(os.getenv("DEFAULT_TAX_RATE", "0.0"))
     DEFAULT_PAYMENT_STATUS = os.getenv("DEFAULT_PAYMENT_STATUS", "Paid")
+    DEFAULT_PAYMENT_TERMS = os.getenv("DEFAULT_PAYMENT_TERMS", "Net 30")
     DEFAULT_FULFILLMENT_STATUS = os.getenv(
         "DEFAULT_FULFILLMENT_STATUS", "Delivered"
     )
