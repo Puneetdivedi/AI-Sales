@@ -1,22 +1,13 @@
-# AI Sales (Local Sales Management)
+# AI Sales and Monitoring Agent (Beginner)
 
-A local, offline-friendly sales and monitoring console for small teams. It uses SQLite for durable storage, supports product and customer management, captures rich purchase details, and generates daily reports.
+This is a simple, beginner-friendly AI sales assistant and monitoring tool you can run from the terminal.
+It works without an API key and can be upgraded to use a real LLM later.
 
-## Highlights
-
-- Full local storage (SQLite) with last-N purchase retention
-- Product and customer management (add/edit/search)
-- Detailed purchase capture (quantity, tax, discounts, payment, channel, region, etc.)
-- Daily sales report with 7-day trend and top products
-- CSV export and database backup
-- Rotating logs and config validation
-- Optional AI summary (only if you configure an LLM)
-
-## Quick Start (Windows)
+## 1) Setup (Windows)
 
 1. Open VS Code.
 2. Open the folder `Ai Agent`.
-3. Open a terminal.
+3. Open a terminal in VS Code.
 
 Create and activate a virtual environment:
 
@@ -25,105 +16,50 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
+
 Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the app:
+## 2) Configure
 
-```bash
-python main.py
-```
+Open `.env` and update:
 
-## Configuration (.env)
-
-Required:
 - `COMPANY_NAME`
 - `COMPANY_EMAIL`
 - `ALERT_EMAIL`
 
-Defaults:
-- `DEFAULT_CURRENCY` (e.g., USD)
-- `DEFAULT_TAX_RATE` (0 to 1)
-- `DEFAULT_PAYMENT_STATUS`
-- `DEFAULT_PAYMENT_TERMS`
-- `DEFAULT_FULFILLMENT_STATUS`
-- `DEFAULT_CHANNEL`
-- `DEFAULT_SOURCE`
-- `DEFAULT_REGION`
-- `DEFAULT_SALES_REP`
+Optional LLM settings (only if you want to connect a real AI API):
 
-Operational:
-- `MAX_RECENT_PURCHASES`
-- `LOG_LEVEL`
-- `DB_TIMEOUT`
-
-Optional AI (only if you want summaries from a provider):
 - `LLM_PROVIDER=openai_compatible`
 - `API_KEY=your_api_key_here`
 - `LLM_ENDPOINT=your-provider-endpoint`
 - `LLM_MODEL=your-model-name`
 
-Tip: Use `.env.example` as a template.
+If you do not set these, the app uses a safe fallback response.
+When you run it, you will see an AI status line telling you if it is enabled.
 
-## Menu Overview
-
-1. Add a sale
-2. View last purchases
-3. Search purchases
-4. Daily sales report
-5. Export purchases to CSV
-6. Backup database
-7. Manage products
-8. Manage customers
-9. Exit
-
-## Data Model (SQLite)
-
-Tables:
-- `products`: name, sku, category, price, cost, tax_rate, unit, description, features, best_for, active
-- `customers`: name, email, phone, company, industry, segment, status, lead_source, address, notes
-- `purchases`: quantity, unit_price, discounts, tax, total, currency, payment terms, payment/fulfillment status, channel, region, invoice id, tags, notes
-
-CSV files in `data/` are only used for initial seeding.
-
-## Export & Backup
-
-- Exports go to `data/exports/`
-- Backups go to `data/backups/`
-
-## Git (Initialize + Push)
+## 3) Run
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit"
+python main.py
 ```
 
-Then add your remote and push:
+## 4) What this  do
 
-```bash
-git remote add origin <YOUR_GIT_URL>
-git branch -M main
-git push -u origin main
-```
+- Answers customer questions (AI if configured, fallback if not)
+- Logs interactions to `data/interactions.csv`
+- Creates sample data files automatically
+- Generates a daily sales report and alerts
 
-## Files
+## 5) Files
 
 - `main.py` entry point
+- `sales_agent.py` sales assistant
 - `monitoring.py` reporting and alerts
-- `db.py` SQLite storage layer
-- `ui.py` table formatting
-- `logger.py` logging
+- `llm_client.py` AI provider wrapper
 - `config.py` configuration + data setup
-- `llm_client.py` optional AI client
-
-## Notes
-
-This is a local, offline-first tool. It does not send data anywhere unless you explicitly configure an LLM endpoint.
-
-## License
-
-MIT License. See `LICENSE`.
+- `data/` CSV storage
+- `logs/` reserved for future logs
