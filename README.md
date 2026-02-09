@@ -54,7 +54,7 @@ python main.py
 - Creates sample data files automatically
 - Generates a daily sales report and alerts
 
-## 5) Files
+## 5) Files.
 
 - `main.py` entry point
 - `sales_agent.py` sales assistant

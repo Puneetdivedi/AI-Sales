@@ -94,7 +94,7 @@ class SalesAgent:
         return (
             f"Hi {customer_name}, based on what you shared, {name} could be a good fit. "
             f"It is ${price} and includes {features}. "
-            "A couple quick questions to help me to guide you: "
+            "A couple quick questions to help me guide you: "
             "What is your budget, how many users, and when do you want to start? "
             "If you want, I can set up a short demo or send more details. "
             f"You can also reach us at {Config.COMPANY_EMAIL}."
